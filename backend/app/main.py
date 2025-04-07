@@ -1,18 +1,16 @@
+### backend/app/main.py
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
-from pydantic import BaseModel
-from typing import List
-
+from backend.app.api import users
+from backend.app.database.session import engine, Base
 app = FastAPI()
 
-@app.get("/")
-async def root():
-    return {"message": "Hello World"}
+# Crear las tablas
+Base.metadata.create_all(bind=engine)
 
+# Incluir rutas
+app.include_router(users.router)
 
-@app.get("/hello/{name}")
-async def say_hello(name: str):
-    return {"message": f"Hello {name}"}
 
 
 app.add_middleware(
