@@ -6,6 +6,8 @@ from backend.app.models.user import User
 from backend.app.services.user_service import register_user, authenticate_user, create_access_token
 from backend.app.database.session import get_db
 from fastapi.security import OAuth2PasswordRequestForm
+from typing import List
+from backend.app.core.security import get_password_hash
 
 router = APIRouter(prefix="/auth", tags=["Auth"])
 
@@ -20,3 +22,39 @@ def login(form_data: OAuth2PasswordRequestForm = Depends(), db: Session = Depend
         raise HTTPException(status_code=400, detail="Invalid credentials")
     token = create_access_token({"sub": user.email})
     return {"access_token": token, "token_type": "bearer"}
+
+@router.get("/users", response_model=List[UserOut])
+def get_users(db: Session = Depends(get_db)):
+    return db.query(User).all()
+
+@router.delete("/users/{user_id}")
+def delete_user(user_id: int, db: Session = Depends(get_db)):
+    user = db.query(User).filter(User.id == user_id).first()
+    if not user:
+        raise HTTPException(status_code=404, detail="User not found")
+    db.delete(user)
+    db.commit()
+    return {"message": "User deleted"}
+
+
+@router.put("/users/{user_id}", response_model=UserOut)
+def update_user(user_id: int, user: UserCreate, db: Session = Depends(get_db)):
+    # Buscar al usuario en la base de datos
+    db_user = db.query(User).filter(User.id == user_id).first()
+
+    if not db_user:
+        raise HTTPException(status_code=404, detail="User not found")
+
+    # Actualizar los campos del usuario
+    db_user.name = user.name
+    db_user.email = user.email
+    db_user.role = user.role
+
+    if user.password:
+        db_user.hashed_password = get_password_hash(user.password)
+
+    # Commit de los cambios en la base de datos
+    db.commit()
+    db.refresh(db_user)
+
+    return db_user
