@@ -8,6 +8,7 @@ from backend.app.database.session import get_db
 from fastapi.security import OAuth2PasswordRequestForm
 from typing import List
 from backend.app.core.security import get_password_hash
+from backend.app.core.security import verify_password
 
 router = APIRouter(prefix="/auth", tags=["Auth"])
 
@@ -58,3 +59,12 @@ def update_user(user_id: int, user: UserCreate, db: Session = Depends(get_db)):
     db.refresh(db_user)
 
     return db_user
+
+@router.post("/verify-password")
+def verify_user_password(data: UserLogin, db: Session = Depends(get_db)):
+    user = db.query(User).filter(User.email == data.email).first()
+    if not user:
+        raise HTTPException(status_code=404, detail="Usuario no encontrado")
+    if not verify_password(data.password, user.hashed_password):
+        raise HTTPException(status_code=400, detail="Contraseña incorrecta")
+    return {"message": "Contraseña válida", "user_id": user.id}

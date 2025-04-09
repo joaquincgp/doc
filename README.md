@@ -22,8 +22,12 @@
 - Node.js + npm
 
 ### En consola
--  Para iniciar el frontend:
-uvicorn app.main:app --reload  
+-  Para iniciar el frontend en frontend-doc:
+   **npm start**
+- Para iniciar el frontend en front-react:
+En la ruta = ~/Desktop/doc/front-react/doc 
+   **npm run dev**
+
 - Para iniciar el backend:
-en la ruta = ~/Desktop/doc/front-react/doc 
-npm run dev
+**uvicorn app.main:app --reload**
+

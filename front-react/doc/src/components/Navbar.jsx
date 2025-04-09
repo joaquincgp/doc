@@ -1,19 +1,27 @@
 // src/components/Navbar.jsx
-import React from 'react';
+import { AppBar, Toolbar, Typography, Button, Box } from '@mui/material';
 import { Link } from 'react-router-dom';
 
 const Navbar = () => {
   return (
-    <nav className="bg-blue-500 p-4">
-      <div className="container mx-auto flex justify-between items-center">
-        <h1 className="text-white text-2xl">Sistema Médico</h1>
-        <div>
-          <Link to="/" className="text-white mx-2 hover:text-gray-200">Inicio</Link>
-          <Link to="/register" className="text-white mx-2 hover:text-gray-200">Registrar Usuario</Link>
-          <Link to="/users" className="text-white mx-2 hover:text-gray-200">Usuarios</Link>
-        </div>
-      </div>
-    </nav>
+    <AppBar position="static" sx={{ backgroundColor: '#0A2342', boxShadow: 'none' }}>
+      <Toolbar sx={{ justifyContent: 'space-between' }}>
+        <Typography variant="h6" sx={{ fontWeight: 'bold', color: '#F5F5F5' }}>
+          .doc
+        </Typography>
+        <Box>
+          <Button component={Link} to="/" sx={{ color: '#F5F5F5', mx: 1 }}>
+            Inicio
+          </Button>
+          <Button component={Link} to="/register" sx={{ color: '#F5F5F5', mx: 1 }}>
+            Registrar
+          </Button>
+          <Button component={Link} to="/users" sx={{ color: '#F5F5F5', mx: 1 }}>
+            Usuarios
+          </Button>
+        </Box>
+      </Toolbar>
+    </AppBar>
   );
 };
 
