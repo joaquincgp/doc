@@ -1,6 +1,7 @@
-import { Box, Button, Typography, Paper } from '@mui/material';
+import { Box, Typography, Button, Paper } from '@mui/material';
 import { Link } from 'react-router-dom';
-import MedicalServicesIcon from '@mui/icons-material/MedicalServices';
+import Lottie from 'lottie-react';
+import medicalAnimation from '../assets/homePageMainAnimationDOC.json';
 
 const Home = () => {
   return (
@@ -15,17 +16,17 @@ const Home = () => {
       }}
     >
       <Paper elevation={6} sx={{ p: 6, borderRadius: 4, maxWidth: 700, width: '100%', textAlign: 'center' }}>
-        <MedicalServicesIcon sx={{ fontSize: 60, color: 'primary.main' }} />
-        <Typography variant="h4" gutterBottom fontWeight="bold" color="text.primary">
-          Bienvenido al Sistema Médico Doc
+        <Lottie animationData={medicalAnimation} loop={true} style={{ height: 300, marginBottom: 24 }} />
+        <Typography variant="h4" gutterBottom fontWeight="bold" color="primary">
+          Bienvenido a .doc
         </Typography>
-        <Typography variant="subtitle1" sx={{ mb: 4 }} color="text.primary">
-          Administra usuarios, médicos y pacientes con eficiencia y estilo.
+        <Typography variant="subtitle1" sx={{ mb: 4 }}>
+          Tu plataforma para encontrar y gestionar servicios médicos en Ecuador.
         </Typography>
-        <Button variant="contained" component={Link} to="/register" sx={{ mr: 2, backgroundColor: 'secondary.main' }}>
+        <Button variant="contained" component={Link} to="/register" sx={{ mr: 2 }}>
           Registrar Usuario
         </Button>
-        <Button variant="outlined" component={Link} to="/users" sx={{ borderColor: 'secondary.main', color: 'secondary.main' }}>
+        <Button variant="outlined" component={Link} to="/users">
           Ver Usuarios
         </Button>
       </Paper>

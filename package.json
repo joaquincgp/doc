@@ -12,6 +12,7 @@
     "@emotion/styled": "^11.14.0",
     "@mui/icons-material": "^7.0.1",
     "@mui/material": "^7.0.1",
+    "lottie-react": "^2.4.1",
     "vite": "^6.2.5"
   },
   "devDependencies": {
