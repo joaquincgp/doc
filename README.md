@@ -21,6 +21,9 @@
 - Python 3.11+
 - Node.js + npm
 
-### Usando Docker
-```bash
-docker-compose up --build
+### En consola
+-  Para iniciar el frontend:
+uvicorn app.main:app --reload  
+- Para iniciar el backend:
+en la ruta = ~/Desktop/doc/front-react/doc 
+npm run dev

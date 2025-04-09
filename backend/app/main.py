@@ -15,9 +15,11 @@ app.include_router(prescriptions.router)
 
 #Middleware
 # Allow frontend requests
+# allow_origins=["http://localhost:5173"], para vite y tailwind
+#allow_origins = ["http://localhost:3000"], para react puro
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["http://localhost:3000"],
+    allow_origins=["http://localhost:5173"],
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
