@@ -10,22 +10,22 @@ const Home = () => {
         display: 'flex',
         justifyContent: 'center',
         alignItems: 'center',
-        background: 'linear-gradient(to right, #505f54, #a2a68a)',
+        backgroundColor: 'background.default',
         padding: 4,
       }}
     >
       <Paper elevation={6} sx={{ p: 6, borderRadius: 4, maxWidth: 700, width: '100%', textAlign: 'center' }}>
-        <MedicalServicesIcon sx={{ fontSize: 60, color: '#1a2b3c' }} />
-        <Typography variant="h4" gutterBottom fontWeight="bold">
+        <MedicalServicesIcon sx={{ fontSize: 60, color: 'primary.main' }} />
+        <Typography variant="h4" gutterBottom fontWeight="bold" color="text.primary">
           Bienvenido al Sistema Médico Doc
         </Typography>
-        <Typography variant="subtitle1" sx={{ mb: 4 }}>
+        <Typography variant="subtitle1" sx={{ mb: 4 }} color="text.primary">
           Administra usuarios, médicos y pacientes con eficiencia y estilo.
         </Typography>
-        <Button variant="contained" component={Link} to="/register" sx={{ mr: 2, backgroundColor: '#b66d4e' }}>
+        <Button variant="contained" component={Link} to="/register" sx={{ mr: 2, backgroundColor: 'secondary.main' }}>
           Registrar Usuario
         </Button>
-        <Button variant="outlined" component={Link} to="/users">
+        <Button variant="outlined" component={Link} to="/users" sx={{ borderColor: 'secondary.main', color: 'secondary.main' }}>
           Ver Usuarios
         </Button>
       </Paper>

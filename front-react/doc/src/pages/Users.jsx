@@ -1,8 +1,9 @@
+// src/pages/Users.jsx
 import React, { useState, useEffect } from 'react';
 import {
   Container, Typography, Grid, Card, CardContent, CardActions,
   Button, Dialog, DialogTitle, DialogContent, TextField, DialogActions,
-  IconButton, Snackbar
+  IconButton, Snackbar, Chip
 } from '@mui/material';
 import EditIcon from '@mui/icons-material/Edit';
 import DeleteIcon from '@mui/icons-material/Delete';
@@ -58,7 +59,6 @@ const Users = () => {
       return;
     }
 
-    // Si es válida, abrimos modal de edición
     setEditForm({
       name: selectedUser.name,
       email: selectedUser.email,
@@ -89,19 +89,35 @@ const Users = () => {
     setEditForm({ ...editForm, [e.target.name]: e.target.value });
   };
 
+  const getRoleColor = (role) => {
+    switch (role) {
+      case 'paciente':
+        return 'primary';
+      case 'medico':
+        return 'secondary';
+      default:
+        return 'default';
+    }
+  };
+
   return (
     <Container sx={{ py: 6 }}>
-      <Typography variant="h4" gutterBottom sx={{ color: '#F5F5F5' }}>
+      <Typography variant="h4" gutterBottom color="primary">
         Usuarios Registrados
       </Typography>
-      <Grid container spacing={3}>
+      <Grid container spacing={4}>
         {users.map((user) => (
           <Grid item xs={12} sm={6} md={4} key={user.id}>
-            <Card sx={{ backgroundColor: '#1A1A2E', color: '#FFF' }}>
+            <Card sx={{ backgroundColor: '#ffffff', color: '#002333' }}>
               <CardContent>
                 <Typography variant="h6">{user.name}</Typography>
-                <Typography variant="body2">{user.email}</Typography>
-                <Typography variant="caption" sx={{ color: '#6B8E23' }}>{user.role}</Typography>
+                <Typography variant="body2" sx={{ color: '#6c757d' }}>{user.email}</Typography>
+                <Chip
+                  label={user.role}
+                  color={getRoleColor(user.role)}
+                  size="small"
+                  sx={{ mt: 1 }}
+                />
               </CardContent>
               <CardActions>
                 <IconButton onClick={() => handleEditClick(user)} color="primary">
@@ -116,7 +132,7 @@ const Users = () => {
         ))}
       </Grid>
 
-      {/* Verificar contraseña */}
+      {/* Diálogo de Verificación */}
       <Dialog open={verifyDialogOpen} onClose={() => setVerifyDialogOpen(false)}>
         <DialogTitle>Verifica tu contraseña</DialogTitle>
         <DialogContent>
@@ -132,53 +148,24 @@ const Users = () => {
         </DialogContent>
         <DialogActions>
           <Button onClick={() => setVerifyDialogOpen(false)}>Cancelar</Button>
-          <Button onClick={handleVerifyPassword} variant="contained" color="primary">
+          <Button onClick={handleVerifyPassword} variant="contained">
             Verificar
           </Button>
         </DialogActions>
       </Dialog>
 
-      {/* Formulario de edición */}
+      {/* Edición de Usuario */}
       <Dialog open={editDialogOpen} onClose={() => setEditDialogOpen(false)} maxWidth="sm" fullWidth>
         <DialogTitle>Editar Usuario</DialogTitle>
         <DialogContent>
-          <TextField
-            label="Nombre"
-            name="name"
-            fullWidth
-            value={editForm.name}
-            onChange={handleFormChange}
-            sx={{ mt: 1 }}
-          />
-          <TextField
-            label="Email"
-            name="email"
-            fullWidth
-            value={editForm.email}
-            onChange={handleFormChange}
-            sx={{ mt: 2 }}
-          />
-          <TextField
-            label="Rol"
-            name="role"
-            fullWidth
-            value={editForm.role}
-            onChange={handleFormChange}
-            sx={{ mt: 2 }}
-          />
-          <TextField
-            label="Nueva Contraseña (opcional)"
-            name="password"
-            type="password"
-            fullWidth
-            value={editForm.password}
-            onChange={handleFormChange}
-            sx={{ mt: 2 }}
-          />
+          <TextField label="Nombre" name="name" fullWidth value={editForm.name} onChange={handleFormChange} sx={{ mt: 2 }} />
+          <TextField label="Email" name="email" fullWidth value={editForm.email} onChange={handleFormChange} sx={{ mt: 2 }} />
+          <TextField label="Rol" name="role" fullWidth value={editForm.role} onChange={handleFormChange} sx={{ mt: 2 }} />
+          <TextField label="Nueva Contraseña" name="password" fullWidth type="password" value={editForm.password} onChange={handleFormChange} sx={{ mt: 2 }} />
         </DialogContent>
         <DialogActions>
           <Button onClick={() => setEditDialogOpen(false)}>Cancelar</Button>
-          <Button onClick={handleEditSave} variant="contained" color="success">
+          <Button onClick={handleEditSave} variant="contained" color="primary">
             Guardar
           </Button>
         </DialogActions>

@@ -3,24 +3,34 @@ import { createTheme } from '@mui/material/styles';
 
 const theme = createTheme({
   palette: {
+    mode: 'light',
     primary: {
-      main: '#0A2342', // Azul marino
+      main: '#002333', // Azul Marino
+      contrastText: '#FFFFFF',
     },
     secondary: {
-      main: '#6B8E23', // Verde oliva
+      main: '#159A9C',
     },
     background: {
-      default: '#F5EBDD', // Piel
-      paper: '#ffffff',
+      default: '#DEEFE7', // fondo general
+      paper: '#FFFFFF',
+    },
+    text: {
+      primary: '#002333',
+      secondary: '#6c757d',
+    },
+    info: {
+      main: '#B4BEC9',
     },
   },
   typography: {
-    fontFamily: `'Roboto', 'Helvetica', 'Arial', sans-serif`,
-    h5: {
-      fontWeight: 600,
+    fontFamily: ['"Roboto"', '"Source Sans Pro"', 'sans-serif'].join(','),
+    h4: {
+      fontWeight: 700,
     },
-    body1: {
-      lineHeight: 1.7,
+    button: {
+      textTransform: 'none',
+      fontWeight: 600,
     },
   },
   components: {
@@ -28,7 +38,13 @@ const theme = createTheme({
       styleOverrides: {
         root: {
           borderRadius: 10,
-          textTransform: 'none',
+        },
+      },
+    },
+    MuiPaper: {
+      styleOverrides: {
+        root: {
+          borderRadius: 12,
         },
       },
     },

@@ -25,10 +25,18 @@ const Register = () => {
   };
 
   return (
-    <Box sx={{ backgroundColor: '#0A2342', minHeight: '100vh', py: 8 }}>
+    <Box
+      sx={{
+        bgcolor: 'background.default',
+        minHeight: '100vh',
+        py: 8,
+        display: 'flex',
+        alignItems: 'center',
+      }}
+    >
       <Container maxWidth="sm">
-        <Paper sx={{ p: 5, borderRadius: 4 }}>
-          <Typography variant="h5" sx={{ mb: 3, fontWeight: 600 }}>
+        <Paper elevation={4} sx={{ p: 5 }}>
+          <Typography variant="h5" sx={{ mb: 3, fontWeight: 'bold', color: 'primary.main' }}>
             Registro de Usuario
           </Typography>
           <TextField
@@ -71,9 +79,12 @@ const Register = () => {
           <Button
             fullWidth
             variant="contained"
+            color="secondary"
             sx={{
-              backgroundColor: '#6B8E23',
-              '&:hover': { backgroundColor: '#557B1F' },
+              fontWeight: 600,
+              borderRadius: 2,
+              py: 1.2,
+              fontSize: '1rem',
             }}
             onClick={registerUser}
           >
