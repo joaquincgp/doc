@@ -9,10 +9,18 @@ def register_user(user: UserCreate, db: Session):
     if db_user:
         raise HTTPException(status_code=400, detail="Email already registered")
     new_user = User(
-        name=user.name,
+        first_name=user.first_name,
+        last_name=user.last_name,
         email=user.email,
+        phone_number=user.phone_number,
         hashed_password=get_password_hash(user.password),
         role=user.role,
+        date_of_birth=user.date_of_birth,
+        city=user.city,
+        country=user.country,
+        sexual_gender=user.sexual_gender,
+        insurance=user.insurance,
+        address=user.address,
     )
     db.add(new_user)
     db.commit()

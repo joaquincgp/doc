@@ -2,7 +2,7 @@
 from fastapi import APIRouter, Depends, HTTPException
 from sqlalchemy.orm import Session
 from backend.app.schemas.user import UserCreate, UserOut, UserLogin
-from backend.app.models.user import User
+from backend.app.models.user import User, UserRole
 from backend.app.services.user_service import register_user, authenticate_user, create_access_token
 from backend.app.database.session import get_db
 from fastapi.security import OAuth2PasswordRequestForm
@@ -14,7 +14,10 @@ router = APIRouter(prefix="/auth", tags=["Auth"])
 
 @router.post("/register", response_model=UserOut)
 def register(user: UserCreate, db: Session = Depends(get_db)):
+    if user.role != UserRole.paciente:
+        raise HTTPException(status_code=400, detail="Solo se permiten pacientes en este endpoint.")
     return register_user(user, db)
+
 
 @router.post("/login")
 def login(form_data: OAuth2PasswordRequestForm = Depends(), db: Session = Depends(get_db)):
@@ -47,13 +50,22 @@ def update_user(user_id: int, user: UserCreate, db: Session = Depends(get_db)):
         raise HTTPException(status_code=404, detail="User not found")
 
     # Actualizar los campos del usuario
-    db_user.name = user.name
+    db_user.first_name = user.first_name
+    db_user.last_name = user.last_name
     db_user.email = user.email
     db_user.role = user.role
 
     if user.password:
         db_user.hashed_password = get_password_hash(user.password)
 
+    # Nuevos campos (solo para paciente)
+    if user.role == UserRole.paciente:
+        db_user.date_of_birth = user.date_of_birth
+        db_user.city = user.city
+        db_user.country = user.country
+        db_user.sexual_gender = user.sexual_gender
+        db_user.insurance = user.insurance
+        db_user.address = user.address
     # Commit de los cambios en la base de datos
     db.commit()
     db.refresh(db_user)
