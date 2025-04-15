@@ -1,11 +1,15 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import {
   Box, Container, Paper, Typography, TextField, Button, Alert
 } from '@mui/material';
+import { AuthContext } from '../context/AuthContext';
+import { useNavigate } from 'react-router-dom';
 
 const Login = () => {
+  const { login } = useContext(AuthContext);
   const [form, setForm] = useState({ username: '', password: '' });
   const [error, setError] = useState('');
+  const navigate = useNavigate();
 
   const handleChange = (e) => {
     setForm({ ...form, [e.target.name]: e.target.value });
@@ -23,7 +27,8 @@ const Login = () => {
       setError('Credenciales incorrectas');
     } else {
       const data = await res.json();
-      alert(`Bienvenido. Token: ${data.access_token}`);
+      await login(data.access_token);
+      navigate('/');  // Redirige al home
     }
   };
 
@@ -31,7 +36,7 @@ const Login = () => {
     <Box sx={{ backgroundColor: 'background.default', minHeight: '100vh', py: 8 }}>
       <Container maxWidth="sm">
         <Paper elevation={4} sx={{ p: 5 }}>
-          <Typography variant="h5" mb={3} color="primary">
+          <Typography variant="h5" mb={3} color="primary"  align="center" >
             Iniciar Sesión
           </Typography>
           <TextField
