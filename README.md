@@ -103,7 +103,13 @@ El backend se ejecutará en http://localhost:8000 y el frontend en http://localh
 
 --- 
 ## Créditos
-Este proyecto fue desarrollado por Joaquín Chacón Groes-Petersen, utilizando tecnologías de código abierto y librerías modernas.
+
+Este proyecto fue desarrollado por:
+
+- **Joaquín Chacón (Esudiante de Ingeniería en Software de la Universidad de las Américas)**  
+  - [GitHub](https://github.com/joaquincgp)  
+
+---
 
 ### Tecnologías usadas:
 - FastAPI
