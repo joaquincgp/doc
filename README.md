@@ -132,4 +132,4 @@ Este proyecto fue desarrollado por:
 
 ## Licencia
 
-Este proyecto está licenciado bajo la licencia [MIT](https://choosealicense.com/licenses/mit/). 
+Este proyecto está licenciado bajo la licencia [MIT](https://choosealicense.com/licenses/mit/). Puedes usar, modificar y distribuir este proyecto libremente.
