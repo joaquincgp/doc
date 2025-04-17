@@ -9,6 +9,8 @@ from backend.app.models.user import User, UserRole
 from backend.app.services.user_service import register_user, authenticate_user, create_access_token
 from backend.app.database.session import get_db
 from backend.app.core.security import get_password_hash, verify_password
+from backend.app.models.doctor import Doctor
+
 
 SECRET_KEY = "udla"
 ALGORITHM = "HS256"
@@ -46,11 +48,19 @@ def register(user: UserCreate, db: Session = Depends(get_db)):
 
 @router.post("/login")
 def login(form_data: OAuth2PasswordRequestForm = Depends(), db: Session = Depends(get_db)):
-    user = authenticate_user(form_data.username, form_data.password, db)
-    if not user:
-        raise HTTPException(status_code=400, detail="Invalid credentials")
-    token = create_access_token({"sub": user.email})
-    return {"access_token": token, "token_type": "bearer"}
+    # Buscar primero entre usuarios (pacientes)
+    user = db.query(User).filter(User.email == form_data.username).first()
+    if user and verify_password(form_data.password, user.hashed_password):
+        token = create_access_token({"sub": user.email, "role": user.role})
+        return {"access_token": token, "token_type": "bearer"}
+
+    # Buscar entre médicos
+    doctor = db.query(Doctor).filter(Doctor.email == form_data.username).first()
+    if doctor and form_data.password == "medico123":  # Solo temporal mientras no tiene contraseña
+        token = create_access_token({"sub": doctor.email, "role": "medico"})
+        return {"access_token": token, "token_type": "bearer"}
+
+    raise HTTPException(status_code=400, detail="Credenciales inválidas")
 
 
 @router.get("/me", response_model=UserOut)
