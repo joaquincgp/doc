@@ -126,4 +126,4 @@ Este proyecto fue desarrollado por Joaquín Chacón Groes-Petersen, utilizando t
 
 ## Licencia
 
-Este proyecto está licenciado bajo la licencia MIT. 
+Este proyecto está licenciado bajo la licencia [MIT](https://choosealicense.com/licenses/mit/). 
